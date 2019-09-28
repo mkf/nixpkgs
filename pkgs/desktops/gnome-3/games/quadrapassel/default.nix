@@ -4,14 +4,12 @@
 , meson, ninja, python3, vala, desktop-file-utils
 }:
 
-let
+stdenv.mkDerivation rec {
   pname = "quadrapassel";
-in stdenv.mkDerivation rec {
-  name = "${pname}-${version}";
   version = "3.34.0";
 
   src = fetchurl {
-    url = "mirror://gnome/sources/quadrapassel/${stdenv.lib.versions.majorMinor version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/quadrapassel/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
     sha256 = "1na5j1mf09rdj0kp7fwfdnc1p7mfclpv58is2cs2ldfik4y1p2if";
   };
 
@@ -24,8 +22,6 @@ in stdenv.mkDerivation rec {
     gtk3 gdk-pixbuf librsvg libmanette
     gsound clutter libxml2 clutter-gtk
   ];
-
-  enableParallelBuilding = true;
 
   passthru = {
     updateScript = gnome3.updateScript {
