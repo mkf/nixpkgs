@@ -1,6 +1,5 @@
 { lib, stdenv, fetchurl, pkgconfig, glib, gdk-pixbuf, pango, cairo, libxml2, libgsf
 , bzip2, libcroco, libintl, darwin, rustc, cargo, gnome3
-, withGTK ? false, gtk3 ? null
 , vala, gobject-introspection }:
 
 let
@@ -19,7 +18,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ libxml2 libgsf bzip2 libcroco pango libintl ];
 
-  propagatedBuildInputs = [ glib gdk-pixbuf cairo ] ++ lib.optional withGTK gtk3;
+  propagatedBuildInputs = [ glib gdk-pixbuf cairo ];
 
   nativeBuildInputs = [ pkgconfig rustc cargo vala gobject-introspection ]
     ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
