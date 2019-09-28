@@ -3,6 +3,7 @@
 , meson
 , ninja
 , fetchurl
+, fetchpatch
 , apacheHttpd
 , nautilus
 , pkgconfig
@@ -28,6 +29,14 @@ stdenv.mkDerivation rec {
     sha256 = "04r9ck9v4i0d31grbli1d4slw2d6dcsfkpaybkwbzi7wnj72l30x";
   };
 
+  patches = [
+    # fix gio-unix-2.0 lookup
+    (fetchpatch {
+      url = https://gitlab.gnome.org/GNOME/gnome-user-share/commit/8772980d4732c15505b15dccff2ca3c97e96d49d.patch;
+      sha256 = "03clzhrx72pq1cbmg2y24hvw4i1xsvrg9ip113fi5bc3w4gcji7p";
+    })
+  ];
+
   postPatch = ''
     chmod +x meson_post_install.py
     patchShebangs meson_post_install.py
@@ -39,14 +48,13 @@ stdenv.mkDerivation rec {
       -i data/dav_user_2.4.conf
   '';
 
-  NIX_CFLAGS_COMPILE = "-I${glib.dev}/include/gio-unix-2.0";
-
   mesonFlags = [
     "-Dhttpd=['${apacheHttpd.out}/bin/httpd']"
     "-Dmodules_path=${apacheHttpd.dev}/modules"
     "-Dsystemduserunitdir=${placeholder "out"}/etc/systemd/user"
-    # not exposed with meson
-    # "-Dwith-nautilusdir=${placeholder "out"}/lib/nautilus/extensions-3.0"
+    # In 3.34.0 it defaults to false but it is silently ignored and always installed.
+    # Let’s add it anyway in case they decide to make build respect the option in the future.
+    "-Dnautilus_extension=true"
   ];
 
   nativeBuildInputs = [
