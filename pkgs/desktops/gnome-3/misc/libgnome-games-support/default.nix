@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, glib, gtk3, libgee, intltool, gnome3
+{ stdenv, fetchurl, pkgconfig, glib, gtk3, libgee, gettext, gnome3
 , libintl }:
 
 let
@@ -12,7 +12,7 @@ in stdenv.mkDerivation rec {
     sha256 = "1zkbmnrn161p74qg6jhsn9f66yjjzxfm13pl1klv9av8k1bax9pq";
   };
 
-  nativeBuildInputs = [ pkgconfig intltool ];
+  nativeBuildInputs = [ pkgconfig gettext ];
   buildInputs = [ libintl ];
   propagatedBuildInputs = [
     # Required by libgnome-games-support-1.pc
