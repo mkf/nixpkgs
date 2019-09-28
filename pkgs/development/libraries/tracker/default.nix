@@ -1,24 +1,22 @@
-{ stdenv, fetchurl, intltool, meson, ninja, pkgconfig, gobject-introspection, python3
+{ stdenv, fetchurl, gettext, meson, ninja, pkgconfig, gobject-introspection, python3
 , gtk-doc, docbook_xsl, docbook_xml_dtd_412, docbook_xml_dtd_43, glibcLocales
 , libxml2, upower, glib, wrapGAppsHook, vala, sqlite, libxslt, libstemmer
 , gnome3, icu, libuuid, networkmanager, libsoup, json-glib
 , substituteAll}:
 
-let
+stdenv.mkDerivation rec {
   pname = "tracker";
   version = "2.3.0";
-in stdenv.mkDerivation rec {
-  name = "${pname}-${version}";
 
   outputs = [ "out" "dev" "devdoc" ];
 
   src = fetchurl {
-    url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${name}.tar.xz";
+    url = "mirror://gnome/sources/${pname}/${stdenv.lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
     sha256 = "0yxzqvjm3ij28p6g8jc4pd90yhhslmykcvi1cnyb069lm16m611c";
   };
 
   nativeBuildInputs = [
-    meson ninja vala pkgconfig intltool libxslt wrapGAppsHook gobject-introspection
+    meson ninja vala pkgconfig gettext libxslt wrapGAppsHook gobject-introspection
     gtk-doc docbook_xsl docbook_xml_dtd_412 docbook_xml_dtd_43 glibcLocales
     python3 # for data-generators
   ];
@@ -26,8 +24,6 @@ in stdenv.mkDerivation rec {
   buildInputs = [
     glib libxml2 sqlite upower icu networkmanager libsoup libuuid json-glib libstemmer
   ];
-
-  LC_ALL = "en_US.UTF-8";
 
   mesonFlags = [
     "-Ddbus_services=${placeholder "out"}/share/dbus-1/services"
