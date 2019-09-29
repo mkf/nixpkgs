@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, glib, gettext, bash }:
+{ stdenv, fetchFromGitHub, glib, gettext, bash, gnome3 }:
 
 stdenv.mkDerivation rec {
   pname = "gnome-shell-extension-caffeine";
