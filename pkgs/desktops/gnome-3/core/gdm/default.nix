@@ -91,10 +91,9 @@ stdenv.mkDerivation rec {
     "dbusconfdir=$(out)/etc/dbus-1/system.d"
   ];
 
-  postFixup = ''
+  preInstall = ''
     schema_dir=${glib.makeSchemaPath "$out" "${pname}-${version}"}
-    cp ${override} $schema_dir/org.gnome.login-screen.gschema.override
-    glib-compile-schemas $schema_dir --targetdir=$schema_dir
+    install -D ${override} $schema_dir/org.gnome.login-screen.gschema.override
   '';
 
   passthru = {
