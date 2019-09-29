@@ -41,7 +41,7 @@ stdenv.mkDerivation rec {
     upower
     gnome3.caribou
     gnome3.gjs # for running daemon
-    gnome3.evolution-data-server # folks.py requires org.gnome.Evolution.DefaultSources gsettings; TODO: hardcode the schema path to the library (similarly to https://github.com/NixOS/nixpkgs/issues/47226)
+    gnome3.evolution-data-server # for libebook-contacts typelib
   ];
 
   mesonFlags = [
