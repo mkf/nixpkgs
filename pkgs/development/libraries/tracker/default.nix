@@ -1,8 +1,8 @@
 { stdenv, fetchurl, gettext, meson, ninja, pkgconfig, gobject-introspection, python3
 , gtk-doc, docbook_xsl, docbook_xml_dtd_412, docbook_xml_dtd_43, glibcLocales
 , libxml2, upower, glib, wrapGAppsHook, vala, sqlite, libxslt, libstemmer
-, gnome3, icu, libuuid, networkmanager, libsoup, json-glib
-, substituteAll}:
+, gnome3, icu, libuuid, networkmanager, libsoup, json-glib, systemd
+, substituteAll }:
 
 stdenv.mkDerivation rec {
   pname = "tracker";
@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
     meson ninja vala pkgconfig gettext libxslt wrapGAppsHook gobject-introspection
     gtk-doc docbook_xsl docbook_xml_dtd_412 docbook_xml_dtd_43 glibcLocales
     python3 # for data-generators
+    systemd # used for checks to install systemd user service
   ];
 
   buildInputs = [
@@ -26,8 +27,6 @@ stdenv.mkDerivation rec {
   ];
 
   mesonFlags = [
-    "-Ddbus_services=${placeholder "out"}/share/dbus-1/services"
-    "-Dsystemd_user_services=${placeholder "out"}/lib/systemd/user"
     # TODO: figure out wrapping unit tests, some of them fail on missing gsettings-desktop-schemas
     "-Dfunctional_tests=false"
     "-Ddocs=true"
