@@ -1,13 +1,13 @@
 { stdenv, fetchFromGitHub, libX11, libXinerama, libXrandr, libXft, yacc, pkgconfig }:
 
 stdenv.mkDerivation {
-  name = "cwm-5.6";
+  name = "cwm-6.3-80-g4154b9b";
 
   src = fetchFromGitHub {
-      owner = "chneukirchen";
+      owner = "leahneukirchen";
       repo = "cwm";
-      rev = "b7a8c11750d11721a897fdb8442d52f15e7a24a0";
-      sha256 = "0a0x8rgqif4kxy7hj70hck7jma6c8jy4428ybl8fz9qxgxh014ml";
+      rev = "4154b9b194845814dfc836d80a94f34bcbf25d3e";
+      sha256 = "1qw14v54r6d0prs1mg9dsn551mfd404n5v19qjimwl1h3ji71s9n";
   };
 
   nativeBuildInputs = [ pkgconfig ];
@@ -17,8 +17,8 @@ stdenv.mkDerivation {
 
   meta = with stdenv.lib; {
     description = "A lightweight and efficient window manager for X11";
-    homepage = https://github.com/chneukirchen/cwm;
-    maintainers = [];
+    homepage = https://github.com/leahneukirchen/cwm;
+    maintainers = with maintainers; [ mkf ];
     license     = licenses.isc;
     platforms   = platforms.linux;
   };
