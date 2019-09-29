@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, glib }:
+{ stdenv, fetchFromGitHub, glib, gnome3 }:
 
 stdenv.mkDerivation rec {
   pname = "gnome-shell-extension-pidgin-im-integration";
